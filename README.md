@@ -1,3 +1,3 @@
 # Repositorio de {Informe}
-esta línea la escribí en mi computador.\n
+esta línea la escribí en mi computador.
 esta linea la escribi en github.
