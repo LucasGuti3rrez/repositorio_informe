@@ -1,6 +1,6 @@
 # Proyecto sobre los mundiales
 
-#En este repositorio se encuentran materiales necesarios para el desarrollo de nuestro proyecto.
+##En este repositorio se encuentran materiales necesarios para el desarrollo de nuestro proyecto.
 
 Codigo :desktop_computer:
 
