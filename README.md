@@ -4,7 +4,7 @@ En este repositorio se encuentran materiales necesarios para el desarrollo de nu
 
 ## Codigo :desktop_computer:
 
-## Carpeta con los codigos del proyecto.
+Carpeta con los codigos del proyecto.
 
 ## Datos :file_folder:
 
