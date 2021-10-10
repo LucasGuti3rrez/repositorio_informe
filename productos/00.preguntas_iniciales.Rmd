@@ -1,0 +1,20 @@
+---
+title: "Actividad Semana 8"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Preguntas
+
+1.¿Que país ha resultado campeón más veces?
+
+2.¿Aumento o disminuyo la cantidad de audiencia respecto a los primeros mundiales?
+
+3.¿Que mundial tuvo mas participantes?
+
+4.¿Cuantos paises diferentes han sido campeones?
+
+5.¿Que mundial tuvo mayor cantidad de goles por partido?
