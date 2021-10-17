@@ -1,0 +1,17 @@
+---
+title: "Introducción"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+La copa mundial de la fifa es el torneo más importante del futbol profesional. Donde se enfrentan las mejores selecciones de cada continente con el proposito de alcanzar este ansiado trofeo. Este torneo se realiza cada cuatro años en una sede única, y consta de, una fase de grupos, en la cual se enfrentan cuatro paises (por grupo) y clasifican los dos primeros, una fase de eliminacion directa (octavos de final, cuartos de final, semifinal y la final), en la cual cada etapa consta de un partido unico y el equipo vencedor avanzara a la siguiente.
+
+Este torneo no solo es el más importante a nivel de futbol, sino que tambien a nivel deportivo (buscar fuente).
+Asi lo indican las estadisticas de audiencia, en las cuales destaca con numeros sorprendentes sobre todas las otras diciplinas deportivas. Para cada mundial, hinchas de todos los paises viajan al país anfitrion con el deseo de poder ver y apoyar a su seleccion, cumpliendo un rol fundamental en el desarrollo del partido, ya que al alentar dejan de ser unicamente espectadores y se conviertenen en una motivacion extra para sus jugadores. Y asi lo reconocen los entrenadores, jugadores y periodistas, ya que la energia que transmiten las hinchadas (con sus gritos, canticos, banderas, etc) para ellos es inigualable (buscar fuente).
+
+El proposito de este informe es analizar que tipo de  impacto generan los espectadores en la copa mundial de futbol, ¿Es verdad la afirmacion que realizan los futbolistas acerca de las fanaticadas?. Para logar desarrollar este analisis contamos con informacion sobre la cantidad de espectadores y cantidad de goles de cada uno de los mundiales desde su primera edicion en 1930, hasta la ultima, la cual se llevo a cabo el 2018. 
+
+El informe se dividira en tres partes. En primer lugar analizaremos a profunidad todos los datos, comparando la audiencia desde los primeros mundiales hasta la actualidad y  analogamente haremos el mismo analisis sobre la cantidad de goles. En segundo lugar veremos si es posible explicar los goles de los mundiales en base a la cantidad espectadores, y si esta explicacion, a su vez, coincide con nuestra premisa, la cual es, que la aficion afecta positivamente en los goles realizados. Finalmente concluiremos nuestro informe, comentando los resultados, todo esto sustentado y respaldado por un modelo matematico.

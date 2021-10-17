@@ -1,7 +1,7 @@
 library(tidyverse)
 
-espectadores = read_delim("espectadores.csv")
-goles = read_delim("goles.csv")
+espectadores = read_delim("datos/espectadores.csv")
+goles = read_delim("datos/goles.csv")
 
 
 Mundiales = NULL
