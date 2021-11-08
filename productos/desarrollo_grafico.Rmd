@@ -1,0 +1,50 @@
+---
+title: "Grafico y desarrollo"
+output: html_document
+fontsize: 12pt
+
+---
+
+Como mencione en la introduccion, el proposito de este informe es analizar que tipo de  impacto generan los espectadores en la copa mundial de futbol. Para lo cual recopile informacion desde el primer mundial hasta el ultimo sobre los goles y la asistencia que cada uno tuvo.
+
+```{r, include=FALSE}
+require(tidyverse)
+
+espectadores_datos = read_delim("../datos/espectadores.csv")
+
+goles_datos = read_delim("../datos/goles.csv")
+
+AsisTotal = espectadores_datos$`Asistencia total`
+
+goles = goles_datos$Goles
+```
+
+Para saber si sera posible explicar los goles realizados por mundial en funcion de los espectadores que tuvo el mundial, visualizaremos un grafico de dispersion entre estas variables.
+
+![](../figuras/dispersion.png)
+Como podemos notar existe una tendencia creciente entre los goles realizados por mundial y los espectadores que tuvo el mundial, por lo que es probable que estas dos variables tengan una correlacion positiva.
+
+Verificaremos su correlacion.
+
+```{r}
+cor(AsisTotal,goles)
+
+```
+
+Como podemos ver la correlacion entre los goles realizados por mundial y los espectadores que tuvo el mundial
+es positva y ademas alta, por lo que sera posible generar una recta de regresion que me permita explicar los goles realizados en un mundial a traves de la asistencia total de dicho mundial.
+
+```{r}
+
+regresion = lm(goles ~ AsisTotal)
+summary(regresion)
+
+```
+
+Podemos ver que tanto el intercepto como la recta de regresion son significativos para este modelo,
+por ende, existe una recta que sera capaz de explicar los goles en funcion de la asistencia (de cada mundial).
+
+Visualizaremos el grafico de dispersion junto con la recta de la regresion.
+![](../figuras/regresion.png)
+
+Podemos notar que a medida que mayor sea la cantidad de asistencia que posea un mundial, mayor sera la cantidad de goles realizados en el, permitiendonos corroborar nuestro proposito e hipotesis inicial, el cual era, verificar si era verdad los dichos de los jugadores (el apoyo de la gente ayuda al equipo a jugar mejor).
