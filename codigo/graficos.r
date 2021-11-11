@@ -33,3 +33,10 @@ ggplot(Mundiales,aes(x = Asistotal, y = Goles), lwd = 2) +
                      labels = c(0,"1000","2000","3000","4000")) +
   geom_abline(intercept = regresion$coefficients[1] , slope = regresion$coefficients[2], col = 2)
 ggsave("../figuras/regresion.png")
+
+
+plot(data.frame(espectadores$ano,espectadores$`Asistencia total`), type = "l", main = "Espectadores por mundial",xlab = "año", ylab = "espectadores totales")
+
+
+
+plot(data.frame(goles$ano,goles$Goles), type = "l", main = "Goles por mundial",xlab = "año", ylab = "goles totales")
