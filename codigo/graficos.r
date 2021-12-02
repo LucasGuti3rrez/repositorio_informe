@@ -1,17 +1,16 @@
 library(tidyverse)
 library(ggplot2)
 
-espectadores = read_delim("../datos/espectadores.csv")
-goles = read_delim("../datos/goles.csv")
+espectadores = read.csv("../datos/espectadores.csv")
+goles = read.csv("../datos/goles.csv")
 
 Goles = goles$Goles
-AsisTotal = espectadores$`Asistencia total`
+Asistotal = espectadores$Asistencia.total
 Mundiales = NULL
 Mundiales$Sede = espectadores$Sede
-Mundiales$Asistotal = espectadores$`Asistencia total`
-Mundiales$`Media de asistencia por partido` = espectadores$`Media de asistencia por partido`
+Mundiales$Asistotal = Asistotal
 Mundiales$Goles = goles$Goles
-Mundiales$ano = goles$ano
+Mundiales$año = goles$año
 Mundiales = as.data.frame(Mundiales)
 
 ggplot(Mundiales,aes(x = Asistotal/10^6, y = Goles), lwd = 2) +
@@ -22,7 +21,7 @@ ggplot(Mundiales,aes(x = Asistotal/10^6, y = Goles), lwd = 2) +
        y = 'Goles totales')
 ggsave("../figuras/dispersion.png")
 
-regresion = lm(Goles ~ AsisTotal)
+regresion = lm(Goles[-c(17)] ~ AsisTotal[-c(17)])
 
 ggplot(Mundiales,aes(x = Asistotal, y = Goles), lwd = 2) +
   geom_point() +
@@ -35,24 +34,35 @@ ggplot(Mundiales,aes(x = Asistotal, y = Goles), lwd = 2) +
   geom_abline(intercept = regresion$coefficients[1] , slope = regresion$coefficients[2], col = 2)
 ggsave("../figuras/regresion.png")
 
+Mundiales$año
 
-ggplot(Mundiales,aes(x = ano, y = Asistotal/10^6,, group=1), lwd = 2) +
+años_reales = seq(1930,2018,4)
+
+ggplot(Mundiales,aes(x = año, y = Asistotal/10^6, group=1), lwd = 2) +
   labs(title = 'Espectadores por mundial',
        subtitle = 'En todos los mundiales (1930-2018)',
        x = 'Año',
        y = 'Espectadores totales (Millones)') +
+  scale_x_continuous(breaks = años_reales,
+                     labels = años_reales) +
   geom_line() + 
   geom_point()
+
 
 ggsave("../figuras/espectadores.png")
 
 
-ggplot(Mundiales,aes(x = ano, y = Goles,, group=1), lwd = 2) +
+ggplot(Mundiales,aes(x = año, y = Goles, group=1), lwd = 2) +
   labs(title = 'Goles por mundial',
        subtitle = 'En todos los mundiales (1930-2018)',
        x = 'Año',
        y = 'Goles totales') +
+  scale_x_continuous(breaks = años_reales,
+                     labels = años_reales) +
   geom_line() + 
   geom_point()
 
 ggsave("../figuras/goles.png")
+
+
+

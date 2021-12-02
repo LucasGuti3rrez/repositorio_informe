@@ -1,0 +1,199 @@
+---
+title: "Anexo"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Parametros
+```{r, include=FALSE}
+require(tidyverse)
+require(gt)
+
+espectadores_datos = read.csv("../datos/espectadores.csv")
+
+goles_datos = read.csv("../datos/goles.csv")
+
+espectadores_original = espectadores_datos
+
+espectadores_original$Cantidad.partidos = NULL
+espectadores_original$año = NULL
+
+goles_original = goles_datos
+goles_original$Cantidad.partidos = NULL
+goles_original$año = NULL
+goles_original$Goles.por.partido = NULL
+
+
+goles = goles_datos$Goles
+AsisTotal = espectadores_datos$Asistencia.total
+
+n = dim(goles_datos)[1]
+
+```
+
+```{r, include=FALSE}
+
+regresion = lm(goles ~ AsisTotal)
+summary(regresion)$coefficients
+
+tabla_estimadores <- data.frame(
+  "Parametros" = c('Intercepto','Pendiente'),
+  "Valores estimados" = summary(regresion)$coefficients[1:2], 
+  "Errores estandar" = summary(regresion)$coefficients[3:4], 
+  "Valor t" = summary(regresion)$coefficients[5:6]
+)
+```
+
+Realizamos una regresión entre nuestras variables "Goles totales por mundial" y "Asistencia total por mundial", obteniendo:
+
+```{r}
+summary(regresion)
+```
+
+Podemos notar que nuestro intercepto y nuestra pendiente son significativos, para corroborarlo evaluamos su valor t.
+
+```{r,include = FALSE}
+intercepto_valort = summary(regresion)$coefficients[5]
+pendiente_valort = summary(regresion)$coefficients[6]
+```
+
+```{r}
+intercepto_valort > qt(0.95,19)
+
+```
+
+```{r}
+pendiente_valort > qt(0.95,19)
+
+```
+
+Como ambos son mayores al cuantil 95 de la distribucion t, ambos son significativos.
+
+## Residuos
+
+### Gráfico Residuos vs Valores ajustados
+```{r}
+plot(fitted(regresion), resid(regresion),
+     xlab = "Valores ajustados",
+     ylab = "Residuos",
+     main = "Residuos vs Valores ajustados",
+     lwd = 2 )
+abline(h = 0, lwd = 2)
+```
+
+### Gráfico Residuos vs Predictor
+```{r}
+plot(AsisTotal, resid(regresion),
+     xlab = "Asistencia total",
+     ylab = "Residuos",
+     main = "Residuos vs Predictor",
+     lwd = 2)
+abline(h = 0, lwd = 2)
+```
+
+Podemos notar en ambos graficos que los residuos de nuestra regresión no siguen ningun patrón.
+
+## Outliers
+
+### Residuos estudentizados
+```{r}
+plot(AsisTotal, rstudent(regresion),
+     xlab = "Asistencia total",
+     ylab = "Residuos",
+     main = "Residuos vs Predictor",
+     lwd = 2,
+     ylim = c(-4,4))
+abline(h = 0, lwd = 2)
+
+abline(h = qt(0.975, n - 3), col = "blue", lwd = 2)
+abline(h = -qt(0.975, (n - 3)), col = "blue", lwd = 2)
+
+```
+
+### Residuos estandarizados
+
+```{r}
+plot(AsisTotal, rstandard(regresion),
+     xlab = "Asistencia total",
+     ylab = "Residuos",
+     main = "Residuos vs Predictor",
+     lwd = 2,
+     ylim = c(-4,4))
+abline(h = 0, lwd = 2)
+
+abline(h = qnorm(0.975), col = "red", lwd = 2)
+abline(h = -qnorm(0.975), col = "red", lwd = 2)
+```
+
+Podemos observar un solo residuo que es outlier, el resto esta dentro de los límites.
+
+Realizando el test de normalidad:
+
+```{r}
+qqnorm(rstandard(regresion), lwd = 1.5)
+qqline(rstandard(regresion), col = 2, lwd = 1.5)
+```
+
+A traves del gráfico podemos concluir que los residuos no se ajustan a la recta, es posible que el valor outlier este afectando a la regresion.
+
+```{r}
+
+outlier = which(qnorm(0.975) < rstandard(regresion))
+```
+El dato que se excede por arriba de la cota es el #`r outlier`
+
+Buscaremos los puntos influyentes.
+
+```{r}
+influyentes = as_tibble(influence.measures(regresion)$infmat)
+
+gt(influyentes)
+```
+```{r,include=FALSE}
+n = length(influyentes$cook.d)
+```
+
+### Distancia de Cook
+```{r}
+which(influyentes$cook.d > qf(0.975,df1 = 1,df2 = n-2))
+```
+Ningun punto es influyente para la distancia de cook.
+
+### DFBETAS
+```{r}
+which(abs(influyentes$dfb.1_) > 2/sqrt(n))
+```
+Los puntos `r which(abs(influyentes$dfb.1_) > 2/sqrt(n))[1]` y `r which(abs(influyentes$dfb.1_) > 2/sqrt(n))[2]` son influyentes para DFBETAS.
+
+### DFFITS
+```{r}
+which(abs(influyentes$dfb.1_) > 2*sqrt(2/n))
+```
+El punto `r which(abs(influyentes$dfb.1_) > 2*sqrt(2/n))` es influyente para DFFITS.
+
+### COVRATIO
+```{r}
+influyentes1 = which(abs(influyentes$cov.r) > 1 + 3 * 2/n)
+
+influyentes2 = which(abs(influyentes$cov.r) < 1 - 3 * 2/n)
+```
+Los puntos `r influyentes1` y `r influyentes2` son influyentes para COVRATIO.
+
+Luego de realizar estos cuatro tests podemos concluir que efectivamente el dato #`r outlier` afecta negativamente al calculo de la regresion. Una buena medida seria eliminar ese dato del analisis, para asi obtener una mejor recta de regresión.
+
+
+```{r,include=FALSE}
+regresion_nueva = lm(goles[-c(17)] ~ AsisTotal[-c(17)])
+```
+
+Realizando el test de normalidad:
+
+```{r}
+qqnorm(rstandard(regresion_nueva), lwd = 1.5)
+qqline(rstandard(regresion_nueva), col = 2, lwd = 1.5)
+```
+
+A traves del gráfico podemos concluir que los residuos se ajustan a la recta de mejor manera luego de eliminar el dato outlier.
