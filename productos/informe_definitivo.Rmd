@@ -93,7 +93,7 @@ gt(espectadores_datos)
 
 Como mencioné en la introducción, el proposito de este informe es analizar cual es el impacto(si existe) generan los espectadores en la copa mundial de futbol. Para lo cual trabajaremos la información descrita anteriormente.
 
-A continuación bservaremos la evolución del numero de espectadores por mundial a traves del tiempo.
+A continuación bservaremos la evolución del numero de espectadores por mundial a través del tiempo.
 
 ![](../figuras/espectadores.png)
 Podemos ver que ha medida que avanza el tiempo, es mayor la cantidad de público que los mundiales tienen, puesto que los datos siguen una tendencia creciente. Esto podría ser atribuido a la mejora económica de la población mundial, a la masificación del fútbol, etc.
@@ -101,7 +101,7 @@ Podemos ver que ha medida que avanza el tiempo, es mayor la cantidad de público
 Se puede apreciar distintos 'peaks' de espectadores en los años 1950,1966-1974,1994 (Brasil, Inglaterra, México, Alemania y Estados Unidos respectivamente). Los cuales pueden ser atribuidos al desarrollo economico y turístico del país sede (en comparación con los países anfitriones de otros mundiales).   
 
 
-A continuación observaremos la evolucion de la cantidad de goles realizados por mundial a traves del tiempo.
+A continuación observaremos la evolucion de la cantidad de goles realizados por mundial a través del tiempo.
 
 ![](../figuras/goles.png)
 Podemos observar que ha medida que avanza el tiempo, es mayor la cantidad de goles que en los mundiales se realizaron, puesto que los datos siguen una tendencia creciente. Estó podría ser atribuido a la evolucion tactica y tecnica del deporte, la cantidad de publico en el estadio, etc.
@@ -116,7 +116,7 @@ En primer lugar visualizaremos el grafico de dispersion entre la cantidad de esp
 
 Observando el grafico podemos evidenciar que existe una tendencia creciente entre los goles realizados por mundial y los espectadores que este tuvo, por lo que es probable que estas dos variables tengan una correlación positiva.
 
-Para verificar lo concluido en el parrafo anterior se aplicó una prueba de correlación entre estas dos variables obteniendo `r cor(AsisTotal,goles) `, que es positva y ademas alta, por lo que sera posible generar una recta de regresion que me permita explicar los goles realizados en un mundial a traves del publico total de dicho mundial.
+Para verificar lo concluido en el parrafo anterior se aplicó una prueba de correlación entre estas dos variables obteniendo `r cor(AsisTotal,goles) `, que es positva y ademas alta, por lo que sera posible generar una recta de regresion que me permita explicar los goles realizados en un mundial a través del publico total de dicho mundial.
 
 ```{r, include=FALSE}
 
@@ -146,7 +146,7 @@ En la figura anterior se puede observar que la recta de regresión se ajusta cor
 
 ## Conclusion
 
-En este informe visualizamos la evolucion de la cantidad de goles y la cantidad de espectadores por mundial a trabes del tiempo, notando que con el paso del tiempo ambos conteos han ido en aumento. Posteriormente realizamos un grafico de dispersión entre estas dos variables donde notamos que existe una correlación entre estasa. Por ultimo realizamos la regresión, la cual fue significativa.
+En este informe visualizamos la evolucion de la cantidad de goles y la cantidad de espectadores por mundial a través del tiempo, notando que con el paso del tiempo ambos conteos han ido en aumento. Posteriormente realizamos un grafico de dispersión entre estas dos variables donde notamos que existe una correlación entre estasa. Por ultimo realizamos la regresión, la cual fue significativa.
 
 Son muchas las personas dedicadas al fútbol que hablan del público en los estadios como un apoyo fundamental, que se convierten en un jugador más para el equipo, etc., lo que para la gran mayoría puede sonar a palabras de buena crianza o simplemente populismo. Pero estas palabras no son solo dichos, son una realidad.
 
